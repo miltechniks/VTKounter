@@ -19,7 +19,7 @@ jobs:
         run: npm install
 
       - name: Run build
-        run: npm run electron:build -- --publish always
+        run: npm run electron:build -- --publish always -c.publish.owner=${{ github.repository_owner }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
