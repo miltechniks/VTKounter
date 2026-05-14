@@ -1,11 +1,15 @@
 name: CI Pipeline
 on: [push]
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
@@ -16,10 +20,12 @@ jobs:
 
       - name: Run build
         run: npm run electron:build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: VTKounter.AppImage
-          path: dist_electron/VTKounter-*.AppImage
+          name: VTKounter-Builds
+          path: dist_electron/VTKounter-*.*
           retention-days: 5
