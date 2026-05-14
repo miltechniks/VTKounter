@@ -1,3 +1,7 @@
+const crypto = require('crypto');
+const fallbackCreateHash = crypto.createHash;
+crypto.createHash = algorithm => fallbackCreateHash(algorithm === 'md4' ? 'sha256' : algorithm);
+
 module.exports = {
     pluginOptions: {
       electronBuilder: {
